@@ -1,7 +1,25 @@
-node {
-    def root = tool type: 'go', name: 'go'
-    // Export environment variables pointing to the directory where Go was installed
-    withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]) {
-        sh 'go version'
+pipeline {
+    agent any
+    environment {
+        gitcommit = ${gitcommit}
+    }
+    tools {
+        go 'go'
+    }
+
+    stages {
+        stage 'SCM validation' {
+            steps {
+                checkout scm
+                sh "git rev-parse --short HEAD > .git/commit-id"
+                gitcommit = readFile('.git/commit-id').trim()
+            }
+        }
+        stage 'Build' {
+            steps {
+                sh 'cd cmd'
+                sh 'go build .'
+            }
+        }
     }
 }

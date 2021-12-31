@@ -19,10 +19,7 @@ pipeline {
         }
         stage ('Build') {
             steps {
-                script {
-                    sh 'cd cmd'
-                    sh 'go build .'
-                }
+                sh 'go build cmd/main.go'
             }
         }
     }

@@ -9,18 +9,12 @@ node {
 
     stages {
         stage ('SCM validation') {
-            steps {
-                script {
-                    checkout scm
-                    sh "git rev-parse --short HEAD > .git/commit-id"
-                    gitcommit = readFile('.git/commit-id').trim()
-                }
-            }
+            checkout scm
+            sh "git rev-parse --short HEAD > .git/commit-id"
+            gitcommit = readFile('.git/commit-id').trim()
         }
         stage ('Build') {
-            steps {
-                sh 'go build cmd/main.go'
-            }
+            sh 'go build cmd/main.go'
         }
     }
 }

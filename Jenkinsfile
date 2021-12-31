@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'go build ${env.WORKSPACE}/cmd/main.go'
+                sh 'go build $WORKSPACE/cmd/main.go'
             }
         }
     }

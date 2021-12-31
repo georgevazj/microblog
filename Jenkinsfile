@@ -1,12 +1,13 @@
 pipeline {
-    agent { docker { image 'golang:1.17.5-alpine' } }
+    agent any
+    tools {
+        go 'go'
+    }
+    environment {
+        GO111MODULE = 'on'
+    }
     stages {
-        stage('Fix workspace permissions') {
-            steps {
-                sh 'chmod -R 777 $WORKSPACE'
-            }
-        }
-        stage('build') {
+        stage('Compile') {
             steps {
                 sh 'go build $WORKSPACE/cmd/microblog/main.go'
             }

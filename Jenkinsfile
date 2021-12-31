@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        gitcommit = ${gitcommit}
+        gitcommit = "${gitcommit}"
     }
     tools {
         go 'go'

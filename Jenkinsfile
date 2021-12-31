@@ -1,10 +1,10 @@
-pipeline {
-    agent any
-    environment {
-        gitcommit = "${gitcommit}"
-    }
-    tools {
-        go 'go'
+node {
+    def root = tool type: 'go', name: 'go'
+    def gitcommit
+
+    // Export environment variables pointing to the directory where Go was installed
+    withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]) {
+        sh 'go version'
     }
 
     stages {
